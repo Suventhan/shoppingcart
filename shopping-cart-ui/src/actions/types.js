@@ -1,0 +1,3 @@
+export const GET_PRICE_LIST = "GET_PRICE_LIST";
+export const GET_PRODUCTS = "GET_PRODUCTS";
+export const CALCULATE_PRICE = "CALCULATE_PRICE";
