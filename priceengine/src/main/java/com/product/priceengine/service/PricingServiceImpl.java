@@ -3,8 +3,8 @@ package com.product.priceengine.service;
 import com.product.priceengine.constant.UnitType;
 import com.product.priceengine.dto.Item;
 import com.product.priceengine.model.Product;
-import com.product.priceengine.pricelogic.PriceEngine;
 import com.product.priceengine.dto.ShoppingCart;
+import com.product.priceengine.pricelogic.PriceEngineLogic;
 import com.product.priceengine.repository.ProductRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -20,6 +20,7 @@ public class PricingServiceImpl implements PricingService {
     private static final int TOTAL_ITEMS = 50;
 
     private final ProductRepository productRepository;
+    private final PriceEngineLogic priceEngineLogic;
 
     @Override
     public List<Item> getAllItemPrices() {
@@ -37,7 +38,7 @@ public class PricingServiceImpl implements PricingService {
     public ShoppingCart calculatePrice(ShoppingCart shoppingCart) {
         List<Product> products = productRepository.findAllById(shoppingCart.
                 getSelectedItems().stream().map(Item::getId).collect(Collectors.toList()));
-        PriceEngine.calculateShoppingCartPrice(shoppingCart, products);
+        priceEngineLogic.calculateShoppingCartPrice(shoppingCart, products);
 
         return shoppingCart;
     }
@@ -57,7 +58,7 @@ public class PricingServiceImpl implements PricingService {
     private Item createItem(Product product, int units) {
         Item item = new Item(product.getId(), product.getName(), units, 0, UnitType.UNIT);
 
-        PriceEngine.calculateItemPrice(item, product);
+        priceEngineLogic.calculateItemPrice(item, product);
         return item;
     }
 }

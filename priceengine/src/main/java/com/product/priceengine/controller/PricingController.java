@@ -7,6 +7,7 @@ import com.product.priceengine.service.PricingService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:8081")
@@ -27,7 +28,7 @@ public class PricingController {
     }
 
     @PostMapping("/calculatePrice")
-    public ShoppingCart calculatePrice(@RequestBody ShoppingCart shoppingCart) {
+    public ShoppingCart calculatePrice(@Valid @RequestBody ShoppingCart shoppingCart) {
         return pricingService.calculatePrice(shoppingCart);
     }
 }
